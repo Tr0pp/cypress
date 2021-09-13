@@ -26,8 +26,16 @@
 
 //Ignora erro do site
 Cypress.Commands.add('ignoreErrors', () => {
-    Cypress.on('uncaught:exception', (err, runnable) => {
-        console.log(err);
-        return false;
-    });
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            console.log(err);
+            return false;
+        });
 })
+
+Cypress.Commands.add('loginSig', () => {
+    cy.visit('http://sig.bomvalorjudicial.bomvalor-dev/');
+    cy.get('#email').type('adm3@bomvalor.com.br');
+    cy.get('#senha').type('123456');
+
+    cy.get('.buttonM').click();
+});
