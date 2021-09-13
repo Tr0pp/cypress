@@ -25,7 +25,7 @@ describe('Sig', () => {
 
     });
 
-    it('Editar leilão - cria condições de vendas', () => {
+    it('Editar leilão - criar condições de vendas', () => {
         cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
 
         let id = 148; //Setar leilão id a ser editado
