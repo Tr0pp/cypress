@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//Ignora erro do site
+Cypress.Commands.add('ignoreErrors', () => {
+    Cypress.on('uncaught:exception', (err, runnable) => {
+        console.log(err);
+        return false;
+    });
+})
