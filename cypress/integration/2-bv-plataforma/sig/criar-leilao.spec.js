@@ -1,5 +1,5 @@
 describe('Sig', () => {
-    it('Criar leilão', () => {
+    it.skip('Criar leilão', () => {
         //Função para logar no sig
         cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
 
@@ -18,15 +18,31 @@ describe('Sig', () => {
         cy.newDate('#dt'); //Cria data +1 dia para que seja testado normalmente o leilão
         cy.get('#dt_hora').type('0900'); // Preenche hora
 
-        cy.intercept('POST', '**/montagem/salva-leilao').as('salvaLeilao');
         //Salva leilão
         cy.get('#btn_salvar').click();
 
-        cy.wait('@salvaLeilao').then((xhr) => {
-            expect(xhr.response.statusCode).be.eq(200); // Verifica status
-            console.log(xhr.response);
-        })
-
+        cy.reload();
 
     });
+
+    it('Editar leilão - cria condições de vendas', () => {
+        cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
+
+        let id = 148;
+
+        cy.visit(`http://sig.bomvalorjudicial.bomvalor-dev/montagem/edita-leilao/id/${id}`);
+
+        cy.get(`[href="/montagem/condicoes/id/${id}/leilao_id/${id}"]`).click();
+
+        cy.get('[title="Show Source"]').click();
+        cy.get('#nm_descricao').type('Deu certo, João');
+        cy.get('[title="Show Rich Text"]').click();
+
+        cy.get('#salvaCondicoes').click();
+
+        cy.get('.subNav > :nth-child(5) > a').click();
+        cy.get('#statusmontagem_id').select('3');
+
+        cy.get('#btn_salvar').click();
+    })
 });
