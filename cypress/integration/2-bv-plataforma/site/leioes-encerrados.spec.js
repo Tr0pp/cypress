@@ -6,6 +6,6 @@ describe('Site', () => {
         cy.setCookie('ccbv_et', '8gGsO3pSEUw2W3U0alUGU3BIukcGgV');
         cy.setCookie('ccbv_alias', 'Rodrigo');
 
-        // cy.get('.input-group > a').click();
+        cy.get('.input-group > a').click();
     })
 })

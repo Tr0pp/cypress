@@ -20,29 +20,27 @@ describe('Sig', () => {
 
         //Salva leilão
         cy.get('#btn_salvar').click();
-
-        cy.reload();
-
     });
 
     it('Editar leilão - criar condições de vendas', () => {
         cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
 
-        let id = 148; //Setar leilão id a ser editado
+        cy.fixture('leilao').then((leilao) => {
+            cy.visit(`http://sig.bomvalorjudicial.bomvalor-dev/montagem/edita-leilao/id/${leilao.id}`); // Link de editar leilão
 
-        cy.visit(`http://sig.bomvalorjudicial.bomvalor-dev/montagem/edita-leilao/id/${id}`); // Link de editar leilão
+            cy.get(`[href="/montagem/condicoes/id/${leilao.id}/leilao_id/${leilao.id}"]`).click(); // Aba de editar condições
 
-        cy.get(`[href="/montagem/condicoes/id/${id}/leilao_id/${id}"]`).click(); // Aba de editar condições
+        });
 
         cy.get('[title="Show Source"]').click(); // Seleciona o iframe deixando como textarea para inserir o texto
         cy.get('#nm_descricao').type('Deu certo, João');
         cy.get('[title="Show Rich Text"]').click(); // Voltando campo para html
 
-        cy.get('#salvaCondicoes').click(); // Salva condições
+        // cy.get('#salvaCondicoes').click(); // Salva condições
 
         cy.get('.subNav > :nth-child(5) > a').click(); // Editar leilão
         cy.get('#statusmontagem_id').select('3'); // Status montagem: Listagem completa
 
-        cy.get('#btn_salvar').click(); // Salva leilão
+        // cy.get('#btn_salvar').click(); // Salva leilão
     })
 });
