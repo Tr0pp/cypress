@@ -1,18 +1,18 @@
 describe('Sig', () => {
-    it.skip('Criar leilão', () => {
+    it('Criar leilão', () => {
         //Função para logar no sig
         cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
 
         //Form criar leilão
         cy.get('[href="/montagem/leilao-formulario"]').click(); //Entra na aba "Cadastrar Leilão"
         cy.get('#statusmontagem_id').select('2'); //Seleciona o status do leilão como Listagem Parcial
-        cy.get('#leiloeiro_id').select('9999'); // Seleciona casaleiloeira Mercado Comprova
+        cy.get('#leiloeiro_id').select('10010'); // Seleciona casaleiloeira Mercado Comprova
         cy.get('.multiselect').click(); //Seleciona leiloeiro divulgar
         cy.get(':nth-child(3) > a > .checkbox > input').click(); //Seleciona o Abaleilões
         cy.get('.multiselect').click(); //Sai da listagem de leiloeirodivulgar
         cy.get('#comitente_id').selectNth(1); //Seleciona o primeiro comitente
         cy.get('#filial_id').selectNth(1); //Seleciona a primeira localidade
-        cy.get('#nm').type('Leilão test by Cypress'); // Titulo leilao
+        cy.get('#nm').type('Leilão test by Cypress - firebase3'); // Titulo leilao
         cy.get('#statusleilao_id').selectNth(1); //Primeiro status de leilão
         cy.get('#statustipoleilao_id').select('4'); //Define como Praça única
         cy.newDate('#dt'); //Cria data +1 dia para que seja testado normalmente o leilão
@@ -22,7 +22,7 @@ describe('Sig', () => {
         cy.get('#btn_salvar').click();
     });
 
-    it('Editar leilão - criar condições de vendas', () => {
+    it.skip('Editar leilão - criar condições de vendas', () => {
         cy.loginSig('http://sig.bomvalorjudicial.bomvalor-dev/');
 
         cy.fixture('leilao').then((leilao) => {
@@ -36,11 +36,11 @@ describe('Sig', () => {
         cy.get('#nm_descricao').type('Deu certo, João');
         cy.get('[title="Show Rich Text"]').click(); // Voltando campo para html
 
-        // cy.get('#salvaCondicoes').click(); // Salva condições
+        cy.get('#salvaCondicoes').click(); // Salva condições
 
         cy.get('.subNav > :nth-child(5) > a').click(); // Editar leilão
         cy.get('#statusmontagem_id').select('3'); // Status montagem: Listagem completa
 
-        // cy.get('#btn_salvar').click(); // Salva leilão
+        cy.get('#btn_salvar').click(); // Salva leilão
     })
 });
